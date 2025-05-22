@@ -1,0 +1,70 @@
+---
+// src/pages/blog/[slug].astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post: CollectionEntry<'blog'>) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render(); // Renderizar el contenido del post
+const { title, pubDate, description, image, author } = post.data;
+
+const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+<BaseLayout title={`${title} | Blog`} description={description}>
+  <article class="py-12 md:py-20 bg-zinc-800/10">
+    <div class="container mx-auto max-w-3xl px-4"> {/* Contenedor más estrecho para legibilidad */}
+      
+      {/* Encabezado del Post */}
+      <header class="mb-8 md:mb-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-anton text-sky-400 uppercase tracking-wider mb-3 glitch-effect-text" data-text={title}>
+          {title}
+        </h1>
+        <p class="text-sm text-zinc-400 font-roboto-mono">
+          Publicado el {formattedDate} por <span class="text-sky-300">{author}</span>
+        </p>
+        {image?.url && (
+          <img 
+            src={image.url} 
+            alt={image.alt || `Imagen destacada para ${title}`}
+            class="w-full max-h-[400px] object-cover rounded-lg mt-8 shadow-lg" 
+          />
+        )}
+      </header>
+
+      {/* Contenido del Post (Markdown renderizado) */}
+      <div class="prose prose-invert prose-lg lg:prose-xl max-w-none 
+                  prose-headings:font-anton prose-headings:text-sky-400 prose-headings:uppercase
+                  prose-a:text-sky-400 prose-a:no-underline hover:prose-a:underline
+                  prose-strong:text-sky-300
+                  prose-code:font-roboto-mono prose-code:bg-zinc-700 prose-code:p-1 prose-code:rounded-sm prose-code:text-sm
+                  prose-blockquote:border-l-sky-500 prose-blockquote:text-zinc-400
+                  font-roboto-mono text-zinc-300">
+        <Content />
+      </div>
+
+      {/* Navegación de vuelta o a otros posts (opcional) */}
+      <footer class="mt-12 md:mt-16 pt-8 border-t border-zinc-700 text-center">
+        <a href="/blog" class="text-sky-400 font-roboto-mono hover:text-sky-300 transition-colors">
+          &larr; Volver al índice del blog
+        </a>
+      </footer>
+
+    </div>
+  </article>
+</BaseLayout>

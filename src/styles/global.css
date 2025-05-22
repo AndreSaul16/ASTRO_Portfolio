@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.chamfered-corners {
+    /* Define el tamaño del corte de la esquina */
+    --corner-cut: 80px;
+    /* ^^^^^^^^^^^^^^^ Puedes ajustar este de arriba valor */
+    clip-path: polygon(var(--corner-cut) 0%,
+            /* Punto superior izquierdo, después del corte */
+            calc(100% - var(--corner-cut)) 0%,
+            /* Punto superior derecho, antes del corte */
+            100% var(--corner-cut),
+            /* Punto derecho superior, después del corte */
+            100% calc(100% - var(--corner-cut)),
+            /* Punto derecho inferior, antes del corte */
+            calc(100% - var(--corner-cut)) 100%,
+            /* Punto inferior derecho, después del corte */
+            var(--corner-cut) 100%,
+            /* Punto inferior izquierdo, antes del corte */
+            0% calc(100% - var(--corner-cut)),
+            /* Punto izquierdo inferior, después del corte */
+            0% var(--corner-cut)
+            /* Punto izquierdo superior, antes del corte */
+        );
+}
+.scanline-effect {
+    /* Tinte azul sutil (para mantener la temática) */
+    background-color: rgba(139, 129, 226, 0.037); /* Tinte azul muy sutil */
+  
+    /* Scanlines más visibles */
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 1.5px,      /* Espacio entre líneas más pequeño */
+      rgba(14, 233, 69, 0.081) 1px, /* Color azul con más opacidad */
+      rgba(14, 208, 233, 0.112) 20px  /* Líneas más gruesas */
+    );    
+    background-size: 100% 4px; /* Altura total del patrón ajustada */
+  
+    pointer-events: none;
+    opacity: 0.8; /* Mayor opacidad general */
+  
+    /* Animación más rápida y fluida */
+    animation: 
+      animated-scanlines 0.5s linear infinite,
+      flicker 1s linear infinite;
+    
+    z-index: 1;
+}
+
+@keyframes animated-scanlines {
+    0% {
+        background-position-y: 0;
+    }
+    100% {
+        background-position-y: 4px; /* Debe coincidir con background-size height */
+    }
+}
+
+@keyframes flicker {
+    0% { opacity: 0.8; }
+    5% { opacity: 0.7; }
+    10% { opacity: 0.8; }
+    15% { opacity: 0.75; }
+    20% { opacity: 0.8; }
+    25% { opacity: 0.85; }
+    30% { opacity: 0.8; }
+    35% { opacity: 0.75; }
+    40% { opacity: 0.8; }
+    45% { opacity: 0.85; }
+    50% { opacity: 0.8; }
+    55% { opacity: 0.75; }
+    60% { opacity: 0.8; }
+    65% { opacity: 0.85; }
+    70% { opacity: 0.8; }
+    75% { opacity: 0.75; }
+    80% { opacity: 0.8; }
+    85% { opacity: 0.85; }
+    90% { opacity: 0.8; }
+    95% { opacity: 0.75; }
+    100% { opacity: 0.8; }
+}
+
+.glitch-effect-text {
+  position: relative;
+  animation: glitch-skew 0.8s infinite linear alternate;  /* Comentado para más control desde JS */
+}
+
+.glitch-effect-text::before,
+.glitch-effect-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* O el color de fondo de tu elemento si no quieres que se vea el de atrás */
+  overflow: hidden;
+  color: inherit; /* Hereda el color del texto principal */
+}
+
+/* Glitch Visual Principal (para efectos más notorios) */
+.glitch-effect-text::before {
+  left: 1px;
+  text-shadow: -3px 0 #ff00c1; /* Magenta */
+  animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+}
+
+/* Glitch Visual Sutil (para textos que deben ser más legibles) */
+.subtle-glitch-effect-text {
+  position:relative;
+}
+.subtle-glitch-effect-text::before,
+.subtle-glitch-effect-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  color: inherit;
+  opacity: 0.3; /* MUY SUTIL */
+}
+.subtle-glitch-effect-text::before {
+  left: 1px;
+  text-shadow: -1.5px 0 rgba(255, 0, 193, 0.3); /* Magenta muy sutil */
+  animation: glitch-anim-1-subtle 5s infinite linear alternate-reverse; /* Más lento */
+}
+.subtle-glitch-effect-text::after {
+  left: -1px;
+  text-shadow: -0.5px 0 rgba(0, 255, 249, 0.3); /* Cian muy sutil */
+  animation: glitch-anim-2-subtle 6s infinite linear alternate-reverse; /* Más lento y desincronizado */
+}
+
+/* Keyframes para el glitch sutil (cortes más pequeños y menos frecuentes) */
+@keyframes glitch-anim-1-subtle {
+  0% { clip-path: inset(90% 0 5% 0); transform: translateX(-0.2px); }
+  20% { clip-path: inset(40% 0 55% 0); transform: translateX(0.2px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translateX(-0.2px); }
+  60% { clip-path: inset(15% 0 80% 0); transform: translateX(0.2px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translateX(-0.2px); }
+  100% { clip-path: inset(80% 0 15% 0); transform: translateX(0.2px); }
+}
+@keyframes glitch-anim-2-subtle {
+  0% { clip-path: inset(5% 0 90% 0); transform: translateX(0.2px); }
+  20% { clip-path: inset(65% 0 25% 0); transform: translateX(-0.2px); }
+  40% { clip-path: inset(25% 0 70% 0); transform: translateX(0.2px); }
+  60% { clip-path: inset(90% 0 2% 0); transform: translateX(-0.2px); }
+  80% { clip-path: inset(40% 0 40% 0); transform: translateX(0.2px); }
+  100% { clip-path: inset(5% 0 90% 0); transform: translateX(0.2px); }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skewX(0deg); }
+  5% { transform: skewX(0.3deg); }
+  10% { transform: skewX(0.3deg); }
+  15% { transform: skewX(-0.3deg); }
+  20% { transform: skewX(0deg); }
+  100% { transform: skewX(0deg); }
+}

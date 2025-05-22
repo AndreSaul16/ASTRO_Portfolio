@@ -1,0 +1,165 @@
+---
+// src/components/Global/Loader.astro
+// Por ahora, no necesitamos lógica de servidor aquí.
+// Más adelante, podríamos pasar props si fuera necesario (ej. duración, textos)
+---
+<div id="loader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 text-sky-400 p-8 font-mono">
+  
+  {/* Sección Superior - Info del Sistema */}
+  <div class="absolute top-4 left-4 md:top-8 md:left-8 text-xs">
+    <p class="text-sky-400/80">RETRONOVA FASHION VER 2.1::24.005</p>
+    <p class="text-sky-400/80">STATUS CHECK....................OK</p>
+  </div>
+  <div class="absolute top-4 right-4 md:top-8 md:right-8 text-xs text-right">
+    <p class="text-sky-400/80">BIO ID: 39:2</p>
+    <p class="text-sky-400/80">FOR BEST EXPERIENCE: SOUND ON</p>
+  </div>
+
+  {/* Contenedor Principal del Loader */}
+  <div class="w-full max-w-md md:max-w-lg border border-sky-500/40 p-4 md:p-6 space-y-3 md:space-y-4 bg-black/50 backdrop-blur-sm">
+    <div class="flex justify-between items-end text-sm">
+      <p id="loader-status-text" class="text-sky-400/90">PROGRESS</p>
+      <p class="text-lg md:text-xl font-bold text-sky-400" id="loader-percentage">0%</p>
+    </div>
+    
+    {/* Barra de Progreso */}
+    <div class="h-3 md:h-4 w-full bg-sky-500/20 border border-sky-500/40 overflow-hidden rounded-sm">
+      <div id="loader-progress-bar" class="h-full bg-sky-500/60 transition-all duration-300 ease-linear glitch-effect" style="width: 0%;"></div>
+    </div>
+    
+    <p class="text-center text-xs tracking-wider text-sky-400/90" id="loader-message">//SYSTEM LOADING</p>
+    <p class="text-center text-xs text-sky-400/50">&lt;UNABLE TO CANCEL&gt;</p>
+  </div>
+
+  {/* Botón de Skip */}
+  <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-xs">
+    <button id="skip-loader-button" class="px-3 py-1 border border-sky-500/40 hover:bg-sky-500/20 hover:text-sky-400 transition-colors text-sky-400/80">
+      SKIP LOADING
+    </button>
+  </div>
+
+  {/* Textos inferiores */}
+  <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8 text-[10px] text-sky-400/50">
+    CALIBRATION SEQUENCE INITIATED...SYSTEM ONLINE SHORTLY.
+  </div>
+</div>
+
+<style>
+  /* Efecto glitch para la barra de progreso */
+  .glitch-effect {
+    position: relative;
+  }
+
+  .glitch-effect::before,
+  .glitch-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+  }
+
+  .glitch-effect::before {
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    opacity: 0.75;
+  }
+
+  .glitch-effect::after {
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    opacity: 0.75;
+  }
+
+  @keyframes glitch-anim-1 {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-2px); }
+    66% { transform: translateX(2px); }
+    100% { transform: translateX(0); }
+  }
+
+  @keyframes glitch-anim-2 {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(2px); }
+    66% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+  }
+</style>
+
+<script>
+   import { gsap } from "gsap";
+
+// Seleccionamos los elementos del DOM que vamos a usar
+const loaderElement = document.getElementById('loader');
+const progressBar = document.getElementById('loader-progress-bar');
+const percentageText = document.getElementById('loader-percentage');
+const skipButton = document.getElementById('skip-loader-button');
+const loaderMessage = document.getElementById('loader-message'); // Opcional, para cambiar mensajes
+// const statusText = document.getElementById('loader-status-text'); // Opcional
+
+// Duración de la animación del loader en segundos
+const loadingDuration = 3; // Puedes ajustar esto
+
+// Función para ocultar el loader
+function hideLoader() {
+  if (loaderElement) {
+    gsap.to(loaderElement, {
+      opacity: 0,
+      duration: 0.5,
+      onComplete: () => {
+        loaderElement.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Permitir scroll en la página principal
+      }
+    });
+  }
+}
+
+// Prevenir scroll mientras el loader está activo
+document.body.style.overflow = 'hidden';
+
+
+// Línea de tiempo de GSAP para el loader
+const loaderTl = gsap.timeline({
+  onComplete: hideLoader // Llama a hideLoader cuando la timeline termine
+});
+
+// 1. Animar la barra de progreso
+loaderTl.to(progressBar, {
+  width: '100%',
+  duration: loadingDuration,
+  ease: 'linear' // Un progreso constante
+});
+
+// 2. Animar el texto del porcentaje
+// Usamos un objeto ficticio para animar un número y actualizar el texto en cada tick
+let currentProgress = { value: 0 };
+loaderTl.to(currentProgress, {
+  value: 100,
+  duration: loadingDuration,
+  ease: 'linear',
+  onUpdate: () => { // Se ejecuta en cada "frame" de la animación
+    if (percentageText) {
+      percentageText.textContent = `${Math.round(currentProgress.value)}%`;
+    }
+  }
+}, "<"); // El "<" hace que esta animación empiece al mismo tiempo que la anterior (la de progressBar)
+
+loaderTl.to(loaderMessage, {
+  duration: 0.1, 
+  text: "// INITIALIZING INTERFACE...", 
+  onComplete: () => { if (loaderMessage) { loaderMessage.textContent = "// INITIALIZING INTERFACE..."; } } 
+}, ">-1"); 
+
+// ESTA ES LA PARTE A AÑADIR/REEMPLAZAR:
+// Lógica del botón de Skip
+if (skipButton) { // Buena práctica: asegurarse de que el botón existe
+  skipButton.addEventListener('click', () => {
+    if (loaderTl) {
+      loaderTl.kill(); // Detiene y mata la timeline del loader
+    }
+    hideLoader();    // Oculta el loader inmediatamente
+  });
+}
+</script>

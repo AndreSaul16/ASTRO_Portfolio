@@ -1,0 +1,23 @@
+---
+// src/components/Global/Navigation.astro
+const navLinks = [
+  { href: "/", label: "Inicio" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contacto" },
+];
+---
+<nav>
+  <ul class="flex space-x-4 md:space-x-6">
+    {navLinks.map(link => (
+      <li>
+        <a 
+          href={link.href} 
+          class="text-zinc-300 hover:text-sky-400 transition-colors"
+          aria-current={Astro.url.pathname === link.href ? "page" : false}
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

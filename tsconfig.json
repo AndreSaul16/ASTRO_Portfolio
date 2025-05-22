@@ -1,0 +1,18 @@
+{
+  "extends": "astro/tsconfigs/strict", // o "astro/tsconfigs/base" si prefieres menos rigidez
+  "compilerOptions": {
+    "baseUrl": ".", // Permite importaciones absolutas desde la raíz del proyecto
+    "paths": { // Alias para importaciones más limpias
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@assets/*": ["src/assets/*"],
+      "@data/*": ["src/data/*"],
+      "@scripts/*": ["src/scripts/*"],
+      "@styles/*": ["src/styles/*"],
+      "@content/*": ["src/content/*"]
+    },
+    "jsx": "preserve", // Necesario para Astro
+    // Si necesitas tipado específico de GSAP en scripts cliente, puedes añadirlo aquí
+    // "types": ["astro/client", "gsap"] 
+  }
+}

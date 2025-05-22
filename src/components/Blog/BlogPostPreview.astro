@@ -1,0 +1,51 @@
+---
+// src/components/Blog/BlogPostPreview.astro
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>; // El tipo para una entrada de la colección 'blog'
+}
+
+const { post } = Astro.props;
+const { title, pubDate, description, image, tags } = post.data;
+const postUrl = `/blog/${post.slug}`; // Construye la URL al post individual
+
+// Formatear la fecha para que sea más legible
+const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+<article class="bg-zinc-800/50 p-6 rounded-lg shadow-lg hover:shadow-sky-500/30 transition-shadow duration-300 group border border-transparent hover:border-sky-500/50">
+  {image?.url && (
+    <a href={postUrl} aria-label={`Leer más sobre ${title}`}>
+      <img 
+        src={image.url} 
+        alt={image.alt || `Imagen destacada para ${title}`} 
+        class="w-full h-48 object-cover rounded-md mb-4 group-hover:opacity-80 transition-opacity duration-300"
+      />
+    </a>
+  )}
+  <h2 class="text-2xl font-anton text-sky-400 mb-2 group-hover:text-sky-300 transition-colors duration-300">
+    <a href={postUrl}>{title}</a>
+  </h2>
+  <p class="text-xs text-zinc-400 font-roboto-mono mb-3">
+    Publicado el: {formattedDate} por {post.data.author}
+  </p>
+  <p class="text-zinc-300 font-roboto-mono text-sm mb-4 leading-relaxed">
+    {description}
+  </p>
+  {tags && tags.length > 0 && (
+    <div class="flex flex-wrap gap-2 mb-4">
+      {tags.map(tag => (
+        <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="text-xs bg-sky-700/50 text-sky-300 px-2 py-1 rounded font-mono hover:bg-sky-600/70 transition-colors">
+          #{tag}
+        </a>
+      ))}
+    </div>
+  )}
+  <a href={postUrl} class="inline-block text-sky-400 font-roboto-mono font-bold hover:text-sky-300 transition-colors duration-300 group-hover:underline">
+    Leer Más <span class="group-hover:ml-1 transition-all duration-200">&rarr;</span>
+  </a>
+</article>

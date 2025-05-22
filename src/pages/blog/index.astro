@@ -1,0 +1,65 @@
+---
+// src/pages/blog/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import BlogPostPreview from '@components/Blog/BlogPostPreview.astro';
+import type { CollectionEntry } from 'astro:content';
+
+// Obtenemos todos los posts de la colección 'blog'
+// Filtramos los que son borradores (isDraft: true) y los ordenamos por fecha de publicación descendente
+const allPosts = await getCollection('blog', ({ data }: { data: CollectionEntry<'blog'>['data'] }) => {
+  return data.isDraft !== true;
+});
+
+const sortedPosts = allPosts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+  new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+);
+
+// Leer el parámetro 'tag' de la URL
+const tag = Astro.url.searchParams.get('tag');
+
+// Filtrar los posts por la etiqueta seleccionada (si existe)
+const filteredPosts = tag
+  ? sortedPosts.filter((post: CollectionEntry<'blog'>) => post.data.tags && post.data.tags.includes(tag))
+  : sortedPosts;
+
+const pageTitle = "Bitácora de Operaciones"; // O el título que prefieras para tu blog
+const pageDescription = "Exploraciones, análisis y reflexiones sobre IA, desarrollo y tecnología.";
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="py-16 md:py-24 bg-zinc-800/30"> {/* Un fondo ligeramente diferente para la sección del blog */}
+    <div class="container mx-auto max-w-4xl px-4">
+      <h1 class="text-5xl md:text-6xl font-anton text-sky-400 uppercase tracking-wider mb-4 text-center glitch-effect-text" data-text={pageTitle}>
+        {pageTitle}
+      </h1>
+      <p class="text-xl text-zinc-300 font-roboto-mono mb-12 md:mb-16 text-center">
+        {pageDescription}
+      </p>
+
+      {tag && (
+        <div class="mb-8 text-center">
+          <span class="inline-block bg-sky-800/60 text-sky-200 px-3 py-1 rounded font-mono text-sm">
+            Filtrando por etiqueta: <strong>#{tag}</strong>
+          </span>
+          <a href="/blog" class="ml-4 text-sky-400 hover:text-sky-300 font-mono text-xs underline">Quitar filtro</a>
+        </div>
+      )}
+
+      {filteredPosts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          {filteredPosts.map((post: CollectionEntry<'blog'>) => (
+            <BlogPostPreview post={post} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center font-roboto-mono text-zinc-400">
+          // No hay transmisiones con esa etiqueta. <a href='/blog' class='text-sky-400 underline'>Ver todas</a>
+        </p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Estilos adicionales si son necesarios, por ejemplo, para el .glitch-effect-text si lo usas aquí */
+</style>

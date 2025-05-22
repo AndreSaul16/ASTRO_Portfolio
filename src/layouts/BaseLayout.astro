@@ -1,0 +1,74 @@
+---
+// src/layouts/BaseLayout.astro
+import "../styles/global.css";
+import Header from "../components/Global/Header.astro";
+import Footer from "../components/Global/Footer.astro";
+import Loader from "../components/Global/Loader.astro"; // <--- 1. IMPORTA EL LOADER
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+const {} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head
+    ><meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-black text-zinc-100 antialiased">
+    <Loader />
+    <Header />
+    <main id="main-content" class="transition-all duration-300">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      console.log("Layout Base cargado!");
+
+      // Script para manejar el padding del main cuando el header está visible
+      const mainContent = document.getElementById("main-content");
+      const header = document.getElementById("site-header");
+      const isBlogPage = window.location.pathname.startsWith("/blog");
+
+      // Si estamos en la página de blog, siempre mostrar el padding
+      if (isBlogPage) {
+        mainContent?.classList.add("pt-24");
+      } else {
+        // Función para actualizar el padding solo en páginas que no son blog
+        const updateMainPadding = () => {
+          if (header?.classList.contains("-translate-y-full")) {
+            mainContent?.classList.remove("pt-24");
+          } else {
+            mainContent?.classList.add("pt-24");
+          }
+        };
+
+        // Observar cambios en las clases del header
+        const observer = new MutationObserver(updateMainPadding);
+        if (header) {
+          observer.observe(header, {
+            attributes: true,
+            attributeFilter: ["class"],
+          });
+        }
+
+        // Actualizar padding inicial
+        updateMainPadding();
+      }
+    </script>
+  </body>
+</html>

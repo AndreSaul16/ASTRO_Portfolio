@@ -1,0 +1,65 @@
+---
+// src/components/Global/Header.astro
+import Navigation from './Navigation.astro';
+
+// Detectar si estamos en la página de blog
+const isBlogPage = Astro.url.pathname.startsWith('/blog');
+---
+<header
+  id="site-header"
+  class:list={[
+    "py-6 px-4 md:px-8 fixed top-0 left-0 right-0 z-50 bg-zinc-900/80 backdrop-blur-md transition-all duration-300 ease-out",
+    {
+      "transform -translate-y-full opacity-0": !isBlogPage,
+      "opacity-100": isBlogPage
+    }
+  ]}
+>
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="/" class="text-2xl font-bold text-sky-400 hover:text-sky-300 transition-colors font-rubik-glitch">
+      SB://PORTFOLIO
+    </a>
+    <Navigation />
+  </div>
+</header>
+
+<script>
+  // Script para manejar la visibilidad del header al hacer scroll
+  const header = document.getElementById('site-header');
+  const isBlogPage = window.location.pathname.startsWith('/blog');
+  
+  // Solo aplicar el comportamiento de scroll si NO estamos en la página de blog
+  if (!isBlogPage) {
+    let lastScroll = 0;
+    let hasScrolled = false;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      // Si es la primera vez que se hace scroll, mostrar el header
+      if (!hasScrolled && currentScroll > 0) {
+        hasScrolled = true;
+        header?.classList.remove('-translate-y-full', 'opacity-0');
+        return;
+      }
+      
+      // Si volvemos al inicio, ocultar el header
+      if (currentScroll <= 0) {
+        hasScrolled = false;
+        header?.classList.add('-translate-y-full', 'opacity-0');
+        return;
+      }
+      
+      // Si estamos scrolleando hacia abajo, ocultar el header
+      if (currentScroll > lastScroll) {
+        header?.classList.add('-translate-y-full', 'opacity-0');
+      } 
+      // Si estamos scrolleando hacia arriba, mostrar el header
+      else {
+        header?.classList.remove('-translate-y-full', 'opacity-0');
+      }
+      
+      lastScroll = currentScroll;
+    });
+  }
+</script>

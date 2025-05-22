@@ -1,0 +1,57 @@
+## 🚀 Por qué decidí construir mi propio futuro con tecnología (y no esperar a que alguien me lo dé)
+
+**LOG\_001: bitácora\_inicializada**
+
+No nací rodeado de placas base ni tenía familiares que me introdujeran al mundo del código. Lo que sí tenía era una mente curiosa, un viejo ordenador compartido, y videojuegos. Muchos videojuegos.
+
+Y también una obsesión: **no seguir las reglas.**
+
+---
+
+### 👾 El primer "hack"
+
+Tenía apenas 9 años cuando descubrí que, con ciertas combinaciones de teclas o archivos misteriosos que se copiaban en carpetas profundas, podía "engañar" a mis juegos favoritos. Mientras otros intentaban completar niveles difíciles con paciencia y práctica, yo estaba ocupado buscando cómo activar todos los trucos posibles: dinero infinito, vidas infinitas, desbloquear personajes ocultos. Era magia pura.
+
+Pero no era solo hacer trampas por diversión. Era *entender cómo funcionaba todo por dentro*. Cómo un mod podía cambiar una textura. Cómo editar un archivo `.ini` podía desbloquear una función secreta. Cómo usar la terminal para moverme entre carpetas como un fantasma dentro del sistema. Y entonces lo supe: **la tecnología tenía puertas ocultas**, y yo quería aprender a abrirlas todas.
+
+---
+
+### 🔍 De la trampa al conocimiento
+
+Con los años, esa mentalidad traviesa mutó. Lo que empezó como una pequeña rebeldía digital se convirtió en un hambre profunda de entender, de dominar herramientas y sistemas. Pasé de buscar "cómo instalar mods" a leer foros técnicos, ver tutoriales, probar distribuciones Linux, explorar código fuente y, eventualmente, programar.
+
+Empecé a hacer cursos online, a seguir comunidades, a leer libros técnicos. Estudié algoritmos, lógica, estructuras de datos. Aprendí a usar herramientas como Git, a escribir scripts, a hablar el idioma del backend y también el del frontend. La IA se cruzó en mi camino y me atrapó. Y no paré. Porque en el fondo seguía siendo ese mismo niño curioso, solo que ahora con más teclas bajo los dedos.
+
+---
+
+### 🧠 Aprender como forma de vida
+
+Elegí este camino no porque alguien me lo ofreciera, sino porque **me cansé de esperar**. Porque entendí que si quería un futuro que realmente me representara, tendría que construirlo yo mismo, línea a línea, como un programa bien escrito.
+
+No me bastaba con tener conocimientos básicos. Quería profundidad. Así que estudié Desarrollo de Aplicaciones Multiplataforma. Hice cursos de inteligencia artificial, de computación en la nube, de seguridad. Cada vez que aprendía algo nuevo, lo sentía como desbloquear un nuevo nivel, una nueva habilidad.
+
+Y lo mejor: cuanto más aprendes, más te das cuenta de cuánto te queda por explorar.
+
+---
+
+### 🛠️ No solo consumir, sino crear
+
+No quiero ser solo un usuario pasivo del mundo digital. Quiero ser de los que lo construyen, de los que proponen, de los que solucionan.
+
+En esta terminal que es mi portfolio, cada línea de texto, cada apartado, es testimonio de ese viaje. Un viaje que empezó con trampas en videojuegos, y terminó —o mejor dicho, continúa— como una travesía por la inteligencia artificial, el desarrollo de software y las arquitecturas cloud.
+
+---
+
+### 📡 ¿Y ahora qué?
+
+Ahora sigo. Sigo estudiando, sigo escribiendo, sigo preguntando. Porque construir mi futuro con tecnología no es una meta, es un modo de vida.
+
+Este blog será mi bitácora: aquí dejaré trazas del camino, análisis, curiosidades, reflexiones y aprendizajes. A quien llegue aquí, bienvenido. Si alguna línea te inspira, te enseña algo o te despierta una pregunta, entonces esta transmisión habrá cumplido su propósito.
+
+**SYSTEM\_LOG: manifest\_protocol\_uploaded**
+**STATUS: Autonomous Mode Enabled**
+**NEXT OBJECTIVE: Seguir creando, seguir aprendiendo**
+
+Hasta la próxima transmisión,
+**Saúl Briceño**
+\[Desarrollador Full Stack] \[Ingeniero de IA] \[Arquitecto Cloud en Beta Constante]

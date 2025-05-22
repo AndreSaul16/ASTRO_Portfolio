@@ -1,0 +1,748 @@
+---
+// src/pages/index.astro
+import BaseLayout from '@layouts/BaseLayout.astro';
+// Importaremos la sección de proyectos más adelante
+// import ProjectsSection from '../components/Projects/ProjectsSection.astro';
+
+// Estas son las variables para NUESTRA NUEVA SECCIÓN HERO
+const heroTitle = "Saúl Briceño"; // ¡O el título que tú quieras!
+const heroSubtitle =
+  "[Desarrollador Full Stack] [Ingeniero de IA] [Arquitecto Cloud]";
+const codeSnippet = `
+  // WELCOME TO MY PORTFOLIO!
+  LET JOURNEY_BEGIN = TRUE;
+  IF (READY_TO_EXPLORE) {
+    IGNITE_ENGINES();
+  } ELSE {
+    RECALIBRATE_SEQUENCE();
+  }
+  // SYSTEM_STATUS: OPERATIONAL
+  `;
+const verticalRightText = "[secure-network]";
+const verticalLeftText = "[system-alert]";
+const topLeftCornerText = "[Active protocol]";
+---
+
+<BaseLayout title="Inicio | Saúl Briceño">
+  {/* INICIO DE LA NUEVA SECCIÓN HERO */}
+  <section
+    id="hero"
+    class="font-rubik-glitch min-h-screen flex flex-col justify-center items-center text-center p-4 md:p-8 relative overflow-hidden border-[14px] border-black chamfered-corners ;"
+    style="background-image: url('/assets/foto-831-min (1).jpg'); background-size: cover; background-position: center center;"
+  >
+    {/* 1. Overlay oscuro (el que ya tienes) */}
+    <div class="absolute inset-0 bg-black/00 z-0"></div>
+
+    {/* 2. NUEVO: Overlay para el filtro de pantalla (scanlines, tinte) */}
+    <div class="absolute inset-0 z-[1] scanline-effect"></div>
+    {/* Le damos z-index 1 */}
+
+    {
+      /* 4. Textos Decorativos en los Bordes (Top centrado, Izquierdo vertical, Derecho vertical) */
+    }
+    {/* Ejemplo para el texto superior centrado: */}
+    <div id="sound-toggle-button" class="absolute top-2 left-1/2 ... z-10">
+      {
+        /* O z-20 si quieres que esté sobre el scanline effect de forma más segura */
+      }
+      {/* ... */}
+    </div>
+    {
+      /* 
+      Texto Superior 
+            
+      top-0: Pegado al borde superior
+      left-1/2 -translate-x-1/2: Centrado horizontalmente
+      px-6 py-2: Padding horizontal y vertical (ajusta el tamaño del recuadro)
+      border-t-2 border-b-2: Bordes arriba y abajo
+      clip-path: Recorta las esquinas superiores exteriores
+      
+      */
+    }
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 text-xs uppercase tracking-wide flex items-center justify-center font-bold font-mono text-sky-400 z-10 px-2 py-3 border-black border-b-4 bg-black rounded-none"
+      style="clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px)); width: 220px; height: 10px;"
+    >
+      {topLeftCornerText}
+    </div>
+
+    {
+      /* 
+Texto Vertical Izquierdo
+left-0: Pegado al borde izquierdo
+-ml-4 md:-ml-8: Compensa el padding del section
+top-1/2 -translate-y-1/2: Centrado verticalmente
+px-8 py-4: Padding grande para el recuadro
+border-t-2 border-b-2: Bordes arriba y abajo
+clip-path: Recorta las esquinas superiores exteriores
+  */
+    }
+    <div
+      class="absolute left-0 top-1/2 -translate-y-1/2 rotate-90 z-10 whitespace-nowrap bg-black rounded-none w-[220px] h-8 -ml-[100px]"
+      style="clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%, 0 18px);"
+    >
+      <p
+        class="text-xs uppercase tracking-wide flex items-center justify-center font-bold font-mono text-sky-400 px-2 py-2"
+      >
+        {verticalLeftText}
+      </p>
+    </div>
+
+    {
+      /* 
+Texto Vertical Derecho
+right-0: Pegado al borde derecho
+-mr-4 md:-mr-8: Compensa el padding del section
+top-1/2 -translate-y-1/2: Centrado verticalmente
+px-8 py-4: Padding grande para el recuadro
+border-t-2 border-b-2: Bordes arriba y abajo
+clip-path: Recorta las esquinas superiores exteriores
+  */
+    }
+    <div
+      class="absolute right-0 top-1/2 -translate-y-1/2 -rotate-90 z-10 whitespace-nowrap bg-black rounded-none w-[220px] h-8 -mr-[100px]"
+      style="clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%, 0 18px);"
+    >
+      <p
+        class="text-xs uppercase tracking-wide flex items-center justify-center font-bold text-sky-400 px-2 py-2"
+      >
+        {verticalRightText}
+      </p>
+    </div>
+
+    {
+      /* Overlay oscuro opcional para mejorar legibilidad del texto sobre la imagen */
+    }
+    <div class="absolute inset-0 bg-black/60 z-0"></div>
+
+    {/* Aumenté un poco la opacidad del overlay */}
+    {/* Bloque de Tiempo */}
+    <div
+      class="absolute top-[4.5rem] left-0 w-full flex justify-between text-xs text-sky-400/70 font-mono px-4 sm:px-6 py-2 md:py-3 z-20"
+    >
+      <span
+        id="code-snippet-time"
+        class="bg-black/50 px-3 py-1 border border-sky-500/40 glitch-effect-text"
+        data-text="[TIME: 00:00:00]"
+        >[TIME: {
+          new Date().toLocaleTimeString("es-ES", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })
+        }]</span
+      >
+      <span
+        id="code-snippet-system"
+        class="bg-black/50 px-3 py-1 border border-sky-500/40 glitch-effect-text"
+        data-text="SYSTEM_STATUS: ONLINE"
+        >SYSTEM_STATUS: ONLINE</span
+      >
+    </div>
+    {
+      /* Contenedor del contenido del Hero (para que esté por encima del overlay) */
+    }
+    <div
+      class="relative z-10 flex flex-col items-center w-full max-w-4xl lg:max-w-5xl"
+    >
+      <h1
+        class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase mb-6 md:mb-8 text-white tracking-tight md:tracking-wider font-anton"
+        style="text-shadow: 0 0 15px rgba(0, 220, 255, 0.6), 0 0 25px rgba(0, 180, 255, 0.4);"
+      >
+        {
+          heroTitle
+            .split(" ")
+            .map((word) => (
+              <span class="block my-1 md:my-0 md:inline-block md:mr-4">
+                {word}
+              </span>
+            ))
+        }
+      </h1>
+      <p
+        class="font-rubik-glitch flex items-center justify-center text-lg md:text-xl mb-10 md:mb-6 max-w-xl lg:max-w-2xl"
+      >
+        {heroSubtitle}
+      </p>
+    </div>
+    {/* "Bloque de código" */}
+    <div
+      class="w-full sm:w-80 md:absolute md:right-0 md:bottom-0 md:mr-4 lg:mr-8 md:mb-4 lg:mb-8
+          font-roboto-mono text-xs bg-black/70 border border-sky-500/40 text-sky-300
+          p-3 sm:p-4 rounded shadow-lg shadow-sky-500/10 max-w-xs sm:max-w-sm self-center md:self-end"
+      aria-label="Bloque de código de ejemplo"
+    >
+      <pre
+        class="whitespace-pre-wrap text-left text-[10px] sm:text-xs"><code class="font-rubik-glitch glitch-effect-text" id="code-snippet-text" data-text={codeSnippet}>{codeSnippet}</code></pre>
+    </div>
+    {/* Indicador de scroll (opcional) */}
+    <div class="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-10">
+      <svg
+        class="animate-bounce w-8 h-8 text-sky-400 hover:text-sky-300 transition-colors"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+  {/* FIN DE LA NUEVA SECCIÓN HERO */}
+
+
+  {/* INICIO DE LA SECCIÓN SOBRE MÍ con Tarjeta 3D */}
+  <section
+    id="sobre-mi"
+    class="min-h-screen bg-zinc-900 text-zinc-300 py-20 md:py-32 px-4 flex flex-col items-center justify-center relative overflow-hidden"
+  >
+    {/* Texto de carga inicial */}
+    <p
+      id="about-loading-text"
+      class="font-rubik-glitch text-sky-400 text-3xl md:text-4xl lg:text-5xl mb-12 text-center w-full glitch-effect-text"
+      data-text="Accediendo a los archivos..."
+    >
+      Accediendo a los archivos...
+    </p>
+
+    {/* Barra de carga para la sección "Sobre Mí" */}
+    <div 
+      id="about-loading-container"
+      class="w-64 h-4 bg-black border-2 border-sky-500/40 rounded-full overflow-hidden mb-12"
+    >
+      <div
+        id="about-loading-bar"
+        class="h-full bg-sky-500/40 w-0"
+      ></div>
+    </div>
+
+    <div class="container mx-auto max-w-5xl lg:max-w-6xl">
+      <div
+        class="flex flex-col lg:flex-row items-center md:items-start justify-center gap-12 lg:gap-16"
+      >
+        {/* Columna de la Tarjeta "DNI" */}
+        <div id="about-card-column" class="w-full max-w-md lg:w-2/5">
+          <div
+            id="id-card"
+            class="bg-gradient-to-br from-neutral-300 to-neutral-100 text-neutral-800 p-6 sm:p-8 rounded-xl shadow-2xl relative font-roboto-mono transition-shadow duration-300 ease-out hover:shadow-sky-500/40"
+          >
+            {/* Encabezado de la tarjeta */}
+            <div class="flex justify-between items-start mb-6">
+              <h3
+                class="text-xl sm:text-2xl font-bold uppercase tracking-wider"
+              >
+                SAÚL BRICEÑO
+              </h3>
+              <span
+                class="text-xs bg-sky-600 text-white px-2 py-1 rounded-sm font-bold"
+                >OPERATIVE ID</span
+              >
+            </div>
+
+            {/* Foto y Datos */}
+            <div
+              class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-start"
+            >
+              <div
+                class="w-28 h-28 sm:w-32 sm:h-32 rounded-md overflow-hidden border-2 border-neutral-400 shrink-0"
+              >
+                <img
+                  src="/assets/SAUL.jpg"
+                  alt="Foto de Saúl Briceño"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="text-left sm:text-left w-full">
+                <p class="text-sm">
+                  <strong class="font-bold">NIVEL ACCESO:</strong> ALFA-1
+                </p>
+                <p class="text-sm">
+                  <strong class="font-bold">ESPECIALIDAD:</strong> FULL STACK / IA
+                  / CLOUD
+                </p>
+                <p class="text-sm">
+                  <strong class="font-bold">ESTADO:</strong> ACTIVO
+                </p>
+                <div class="mt-4 pt-3 border-t border-neutral-400/50">
+                  <p class="text-xs uppercase font-bold mb-1 text-sky-700">
+                    CONTACT_CHANNELS:
+                  </p>
+                  <a
+                    href="#linkedin"
+                    class="block text-xs hover:text-sky-600 transition-colors"
+                    >LI://SAULBRICENO</a
+                  >
+                  <a
+                    href="#github"
+                    class="block text-xs hover:text-sky-600 transition-colors"
+                    >GH://SAULBRICENO_GIT</a
+                  >
+                  <a
+                    href="mailto:tuemail@example.com"
+                    class="block text-xs hover:text-sky-600 transition-colors"
+                    >EM://CONTACT@SAULB.DEV</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            {/* Código de barras o elemento decorativo inferior */}
+            <div class="mt-6 text-center text-xs text-neutral-500">
+              <p>// SECURE ACCESS ID: SB-7345-29X // AUTORIZADO //</p>
+            </div>
+          </div>
+          
+          {/* Botón de acceso al blog */}
+          <button
+            id="blog-access-btn"
+            class="mt-8 w-full bg-black/80 text-sky-400 border-2 border-sky-500/40 px-6 py-3 rounded-lg font-rubik-glitch text-lg uppercase tracking-wider hover:bg-sky-900/80 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-sky-500/20 glitch-effect-text"
+            data-text="[ACCEDER AL BLOG]"
+          >
+            [ACCEDER AL BLOG]
+          </button>
+        </div>
+
+        {/* Columna del Texto "Sobre Mí" */}
+        <div
+          id="about-text-column"
+          class="w-full lg:w-3/5 text-center lg:text-left"
+        >
+          <h2
+            id="about-title"
+            class="text-4xl font-rubik-glitch sm:text-4xl font-anton text-sky-400 uppercase mb-6 tracking-wider glitch-effect-text"
+            data-text="// TRANSMISIÓN_BIOGRÁFICA"
+          >
+            // TRANSMISIÓN_BIOGRÁFICA
+          </h2>
+          <div
+            class="font-roboto-mono text-base sm:text-lg text-zinc-300 leading-relaxed space-y-5"
+          >
+            <p>
+              Mi designación es Saúl Briceño. Opero en el nexo donde el <strong
+                class="text-sky-300">Desarrollo Full Stack</strong
+              > se encuentra con la estrategia de la <strong
+                class="text-sky-300">Ingeniería de IA</strong
+              > y la robustez de la <strong class="text-sky-300"
+                >Arquitectura Cloud</strong
+              >.
+            </p>
+            <p>
+              Mi directiva principal es la creación de sistemas de información
+              que no solo cumplan su función, sino que la superen en eficiencia,
+              escalabilidad y fiabilidad. Cada línea de código, cada
+              configuración de infraestructura, es un movimiento táctico hacia
+              la solución óptima.
+            </p>
+            <p>
+              Actualmente en fase de inmersión profunda en protocolos de
+              Inteligencia Artificial, con el objetivo de integrar estas
+              capacidades avanzadas en futuras operaciones. Busco misiones
+              desafiantes y colaboraciones que expandan los límites de lo
+              tecnológicamente posible.
+              <strong
+                id="final-transmission"
+                class="text-sky-300 block mt-2 font-rubik-glitch leading-loose tracking-wide"
+                data-text="/_TRANSMISIÓN_FINALIZADA"
+              >
+                /_TRANSMISIÓN_FINALIZADA
+              </strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {/* FIN DE LA SECCIÓN SOBRE MÍ */}
+
+  {/* SECCIÓN DE CONTACTO */}
+  <section 
+    id="contacto" 
+    class="min-h-screen bg-zinc-900 relative overflow-hidden opacity-0 translate-y-8"
+    data-section="contact"
+  >
+    {/* Efecto de fondo con grid */}
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.8)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.8)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+    
+    {/* Overlay con efecto de scanlines */}
+    <div class="absolute inset-0 scanline-effect opacity-20"></div>
+
+    {/* Efecto de terminal typing */}
+    <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div class="terminal-lines"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-20 relative z-10">
+      <div class="max-w-2xl mx-auto">
+        {/* Encabezado con efecto de typing */}
+        <div class="text-center mb-12">
+          <h2 
+            class="text-4xl md:text-5xl font-rubik-glitch text-sky-400 uppercase tracking-wider mb-4 glitch-effect-text typing-text" 
+            data-text="INICIAR TRANSMISIÓN"
+            data-typing="INICIAR TRANSMISIÓN"
+          >
+            <span class="typing-cursor">_</span>
+          </h2>
+          <p class="text-zinc-400 font-roboto-mono typing-text" data-typing="// Estableciendo conexión segura...">
+            <span class="typing-cursor">_</span>
+          </p>
+        </div>
+
+        {/* Formulario con efecto de aparición */}
+        <form 
+          id="contact-form" 
+          class="space-y-6 bg-zinc-800/50 p-8 rounded-lg border border-sky-500/20 backdrop-blur-sm form-reveal"
+        >
+          {/* Grupo de Nombre */}
+          <div class="form-group">
+            <label for="name" class="block text-sm font-roboto-mono text-sky-400 mb-2">
+              [IDENTIFICACIÓN]
+            </label>
+            <div class="relative">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full bg-black/50 border-2 border-sky-500/40 text-zinc-300 px-4 py-3 rounded-lg font-roboto-mono focus:outline-none focus:border-sky-400 transition-colors"
+                placeholder="Ingrese su identificación"
+              />
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-sky-400/50">
+                <span class="animate-pulse">_</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Grupo de Email */}
+          <div class="form-group">
+            <label for="email" class="block text-sm font-roboto-mono text-sky-400 mb-2">
+              [CANAL DE CONTACTO]
+            </label>
+            <div class="relative">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full bg-black/50 border-2 border-sky-500/40 text-zinc-300 px-4 py-3 rounded-lg font-roboto-mono focus:outline-none focus:border-sky-400 transition-colors"
+                placeholder="ejemplo@dominio.com"
+              />
+              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-sky-400/50">
+                <span class="animate-pulse">_</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Grupo de Mensaje */}
+          <div class="form-group">
+            <label for="message" class="block text-sm font-roboto-mono text-sky-400 mb-2">
+              [MENSAJE]
+            </label>
+            <div class="relative">
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="4"
+                class="w-full bg-black/50 border-2 border-sky-500/40 text-zinc-300 px-4 py-3 rounded-lg font-roboto-mono focus:outline-none focus:border-sky-400 transition-colors resize-none"
+                placeholder="Iniciando transmisión..."
+              ></textarea>
+              <div class="absolute right-3 bottom-3 text-sky-400/50">
+                <span class="animate-pulse">_</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Botón de Envío */}
+          <button
+            type="submit"
+            class="w-full bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 border-2 border-sky-500/40 px-6 py-3 rounded-lg font-rubik-glitch text-lg uppercase tracking-wider transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:shadow-sky-500/20 glitch-effect-text"
+            data-text="[ENVIAR TRANSMISIÓN]"
+          >
+            [ENVIAR TRANSMISIÓN]
+          </button>
+        </form>
+
+        {/* Mensaje de estado */}
+        <div id="form-status" class="mt-6 text-center font-roboto-mono text-sm text-sky-400/70 hidden">
+          <p class="glitch-effect-text mb-4" data-text="ESTABLECIENDO CONEXIÓN...">
+            ESTABLECIENDO CONEXIÓN...
+          </p>
+          {/* Barra de carga del formulario */}
+          <div class="w-64 h-4 bg-black border-2 border-sky-500/40 rounded-full overflow-hidden mx-auto">
+            <div
+              id="form-loading-bar"
+              class="h-full bg-sky-500/40 w-0 transition-all duration-300 glitch-effect"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Pantalla de transición para el blog */}
+  <div
+    id="blog-transition-overlay"
+    class="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center hidden"
+  >
+    <div class="text-center space-y-8">
+      <h2
+        class="text-3xl md:text-4xl font-rubik-glitch text-sky-400 uppercase tracking-wider glitch-effect-text"
+        data-text="ACCEDIENDO A LA BITÁCORA"
+      >
+        ACCEDIENDO A LA BITÁCORA
+      </h2>
+      
+      {/* Barra de carga con efecto glitch */}
+      <div class="w-64 h-4 bg-black border-2 border-sky-500/40 rounded-full overflow-hidden">
+        <div
+          id="blog-loading-bar"
+          class="h-full bg-sky-500/40 w-0 transition-all duration-300 glitch-effect"
+        ></div>
+      </div>
+      
+      <p
+        class="text-sky-400/70 font-mono text-sm glitch-effect-text"
+        data-text="INICIALIZANDO PROTOCOLOS..."
+      >
+        INICIALIZANDO PROTOCOLOS...
+      </p>
+    </div>
+  </div>
+
+  <style>
+    /* Estilos para las animaciones de la sección de contacto */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    @keyframes terminalLine {
+      0% { transform: translateY(-100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 0.1; }
+    }
+
+    @keyframes formReveal {
+      0% { 
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+        filter: blur(10px);
+      }
+      100% { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .typing-text {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #0ea5e9;
+      animation: typing 3.5s steps(40, end),
+                 blink .75s step-end infinite;
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 0;
+      animation: blink 1s step-end infinite;
+    }
+
+    .terminal-lines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      animation: terminalLine 0.5s linear infinite;
+      pointer-events: none;
+    }
+
+    .form-reveal {
+      animation: formReveal 1s ease-out forwards;
+      animation-delay: 2s;
+      opacity: 0;
+    }
+
+    /* Efecto de aparición de la sección */
+    #contacto.animate-in {
+      animation: sectionReveal 1.5s ease-out forwards;
+    }
+
+    @keyframes sectionReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script>
+    import { initializeEffects } from '@scripts/animations.js';
+    
+    // Inicializar todos los efectos cuando el DOM esté listo
+    initializeEffects();
+
+    // Script para el formulario de contacto
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const formStatus = document.getElementById('form-status');
+    const formLoadingBar = document.getElementById('form-loading-bar');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Mostrar estado de envío y barra de carga
+        if (formStatus && formLoadingBar) {
+          formStatus.classList.remove('hidden');
+          formStatus.querySelector('p')!.textContent = 'TRANSMITIENDO...';
+          
+          // Animar la barra de carga
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += 2;
+            formLoadingBar.style.width = `${progress}%`;
+            
+            if (progress >= 100) {
+              clearInterval(interval);
+              // Mostrar mensaje de éxito
+              setTimeout(() => {
+                if (formStatus) {
+                  formStatus.querySelector('p')!.textContent = '¡MENSAJE ENVIADO!';
+                  formStatus.querySelector('p')!.classList.add('text-green-400');
+                  formLoadingBar.classList.add('bg-green-500/40');
+                }
+              }, 500);
+            }
+          }, 30);
+        }
+
+        // Simular envío (aquí iría la lógica real de envío)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Resetear formulario
+        form.reset();
+
+        // Ocultar mensaje después de 3 segundos
+        setTimeout(() => {
+          if (formStatus && formLoadingBar) {
+            formStatus.classList.add('hidden');
+            formLoadingBar.style.width = '0%';
+            formLoadingBar.classList.remove('bg-green-500/40');
+            formStatus.querySelector('p')!.classList.remove('text-green-400');
+          }
+        }, 3000);
+      });
+    }
+
+    // Efecto de cursor parpadeante en inputs
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        const cursor = input.parentElement?.querySelector('.animate-pulse');
+        if (cursor) cursor.classList.add('text-sky-400');
+      });
+      
+      input.addEventListener('blur', () => {
+        const cursor = input.parentElement?.querySelector('.animate-pulse');
+        if (cursor) cursor.classList.remove('text-sky-400');
+      });
+    });
+
+    // Efectos para el botón de blog y la transición
+    document.addEventListener('DOMContentLoaded', () => {
+      const blogBtn = document.getElementById('blog-access-btn');
+      const transitionOverlay = document.getElementById('blog-transition-overlay');
+      const loadingBar = document.getElementById('blog-loading-bar');
+      
+      if (blogBtn && transitionOverlay && loadingBar) {
+        blogBtn.addEventListener('click', () => {
+          // Mostrar la pantalla de transición
+          transitionOverlay.classList.remove('hidden');
+          
+          // Animar la barra de carga
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress += 2;
+            loadingBar.style.width = `${progress}%`;
+            
+            if (progress >= 100) {
+              clearInterval(interval);
+              // Redirigir al blog después de completar
+              setTimeout(() => {
+                window.location.href = '/blog';
+              }, 500);
+            }
+          }, 30);
+        });
+      }
+    });
+
+    // Animación de la sección de contacto
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const section = entry.target;
+          section.classList.add('animate-in');
+          
+          // Iniciar animación de typing para los textos
+          const typingElements = section.querySelectorAll('.typing-text');
+          typingElements.forEach((element, index) => {
+            const text = element.getAttribute('data-typing');
+            if (text) {
+              setTimeout(() => {
+                let i = 0;
+                const typeWriter = () => {
+                  if (i < text.length) {
+                    element.textContent = text.substring(0, i + 1);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                  } else {
+                    element.classList.remove('typing-text');
+                    element.classList.add('typing-done');
+                  }
+                };
+                typeWriter();
+              }, index * 1000); // Retraso escalonado para cada elemento
+            }
+          });
+
+          observer.unobserve(section); // Dejar de observar una vez animado
+        }
+      });
+    }, observerOptions);
+
+    // Observar la sección de contacto
+    document.addEventListener('DOMContentLoaded', () => {
+      const contactSection = document.getElementById('contacto');
+      if (contactSection) {
+        observer.observe(contactSection);
+      }
+    });
+  </script>
+</BaseLayout>
