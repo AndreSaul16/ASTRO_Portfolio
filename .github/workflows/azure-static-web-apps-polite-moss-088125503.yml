@@ -14,36 +14,40 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    permissions:
-       id-token: write
-       contents: read
+    permissions: # Permisos necesarios si usas OIDC con github_id_token
+        id-token: write
+        contents: read
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-          lfs: false
+          lfs: false # Asegúrate que lfs sea false si no usas Git LFS, o true si sí lo usas.
+
+      # Los siguientes dos pasos son para obtener un token OIDC de GitHub.
+      # Si tu autenticación principal es a través de AZURE_STATIC_WEB_APPS_API_TOKEN,
+      # estos podrían ser opcionales o redundantes, pero no deberían dañar si están.
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
         uses: actions/github-script@v6
         id: idtoken
         with:
-           script: |
-               const coredemo = require('@actions/core')
-               return await coredemo.getIDToken()
-           result-encoding: string
+          script: |
+            const coredemo = require('@actions/core')
+            return await coredemo.getIDToken()
+          result-encoding: string
+      
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_MOSS_088125503 }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_MOSS_088125503 }} # Tu token de despliegue de SWA
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "" # Built app content directory - optional
-          github_id_token: ${{ steps.idtoken.outputs.result }}
+          ###### Repository/Build Configurations ######
+          app_location: "/" # Ruta al código fuente de tu aplicación (raíz si package.json está ahí)
+          api_location: ""  # Ruta al código de tu API (si tienes Azure Functions, si no, vacío)
+          output_location: "dist" # ¡CAMBIO IMPORTANTE AQUÍ! Directorio de salida de Astro
+          github_id_token: ${{ steps.idtoken.outputs.result }} # Token OIDC de GitHub (si se usa)
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
@@ -56,3 +60,6 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "close"
+          # El azure_static_web_apps_api_token también podría ser necesario aquí
+          # si el job necesita autenticarse para cerrar el entorno de PR.
+          # azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_MOSS_088125503 }}
